@@ -67,7 +67,36 @@ module.exports = function(grunt) {
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
         hostname: 'localhost',
-        livereload: 35729
+        livereload: 35729,
+        middleware: function(connect, options) {
+          if (!Array.isArray(options.base)) {
+            options.base = [options.base];
+          }
+
+          // Setup the proxy
+          var middlewares = []; //[require('grunt-connect-proxy/lib/utils').proxyRequest];
+
+          // Serve static files.
+          options.base.forEach(function(base) {
+            middlewares.push(connect.static(base));
+          });
+
+          // Make directory browse-able.
+          var directory = options.directory || options.base[options.base.length - 1];
+          middlewares.push(connect.directory(directory));
+
+          grunt.log.debug('binding CORS header set');
+          // Set CORS headers
+          middlewares.push(function(req, res, next) {
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+            res.setHeader('Access-Control-Allow-Headers', 'set-cookie, x-modhash, accept, content-type, authorization, origin');
+            grunt.log.debug('CORS headers set');
+            next();
+          });
+
+          return middlewares;
+        }
       },
       livereload: {
         options: {
@@ -75,7 +104,36 @@ module.exports = function(grunt) {
           base: [
             '.tmp',
             '<%= yeoman.app %>'
-          ]
+          ]/*,
+          middleware: function(connect, options) {
+            if (!Array.isArray(options.base)) {
+              options.base = [options.base];
+            }
+
+            // Setup the proxy
+            var middlewares = []; //[require('grunt-connect-proxy/lib/utils').proxyRequest];
+
+            // Serve static files.
+            options.base.forEach(function(base) {
+              middlewares.push(connect.static(base));
+            });
+
+            // Make directory browse-able.
+            var directory = options.directory || options.base[options.base.length - 1];
+            middlewares.push(connect.directory(directory));
+
+            grunt.log.writeln('binding CORS header set');
+            // Set CORS headers
+            middlewares.push(function(req, res, next) {
+              res.setHeader('Access-Control-Allow-Origin', '*');
+              res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+              res.setHeader('Access-Control-Allow-Headers', 'set-cookie, x-modhash, accept, content-type, authorization, origin');
+              grunt.log.writeln('CORS headers set');
+              next();
+            });
+
+            return middlewares;
+          }*/
         }
       },
       test: {

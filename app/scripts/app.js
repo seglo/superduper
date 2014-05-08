@@ -17,6 +17,10 @@ angular
         templateUrl: 'views/dupe.html',
         controller: 'DupeCtrl'
       })
+      .when('/oauth', {
+        templateUrl: 'views/oauth.html',
+        controller: 'OauthCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
