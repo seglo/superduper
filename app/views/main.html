@@ -1,15 +1,17 @@
 <div class="header">
-  <ul class="nav nav-pills pull-right">
-    <li class="active"><a ng-href="#">Home</a></li>
-    <li><a ng-href="#">About</a></li>
-    <li><a ng-href="#">Contact</a></li>
-  </ul>
-  <h3 class="text-muted">superduper</h3>
+  <h3 class="text-muted">reddit oauth2 chrome extension angular template</h3>
 </div>
 
 <div class="jumbotron">
-  <p><a class="btn btn-lg btn-success" ng-click="beginOauth()">Login</a></p>
-  <p><a class="btn btn-lg btn-success" ng-href="#">List Subs</a></p>
+  <p><a class="btn btn-lg btn-success" ng-click="authorizeApp()">Authorize App</a></p>
+  <p><a id="getUserInfo" disabled class="btn btn-lg btn-primary" ng-click="getUserInfo()">Get User Info</a></p>
+
+</div>
+
+<div class="panel panel-default" ng-show="userInfo">
+  <div class="panel-body">
+    <pre>{{ userInfo }}</pre>
+  </div>
 </div>
 
 <div class="footer">
