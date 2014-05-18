@@ -1,18 +1,18 @@
 'use strict';
 
 angular.module('superduperApp')
-  .controller('MainCtrl', function($scope, $log, $window, RedditApi) {
-    if (RedditApi.isAuthenticated()) {
-      angular.element('#getUserInfo').removeAttr('disabled');
+  .controller('MainCtrl', function($scope, $log, $window, redditApi) {
+    if (redditApi.isAuthenticated()) {
+      angular.element('#debugCall,#debugGet').removeAttr('disabled');
     }
 
     $scope.authorizeApp = function() {
-      $window.location.href = RedditApi.authorizeUrl();
+      $window.location.href = redditApi.authorizeUrl();
     };
 
-    $scope.getUserInfo = function() {
-      RedditApi.getApiMe().then(function(result) {
-        $scope.userInfo = JSON.stringify(result.data, undefined, 2);
+    $scope.debug = function() {
+      redditApi.get($scope.debugCall).then(function(result) {
+        $scope.debugResponse = JSON.stringify(result.data, undefined, 2);
       });
     };
   });

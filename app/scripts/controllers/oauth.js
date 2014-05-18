@@ -19,9 +19,9 @@ angular.module('superduperApp')
       return results[1] || 0;
     };
   })
-  .controller('OauthCtrl', function($scope, $window, $log, $location, RedditApi) {
+  .controller('OauthCtrl', function($scope, $window, $log, $location, redditApi) {
     var code = $window.location.getQueryVar('code');
-    RedditApi.getAccessToken(code).then(function() {
+    redditApi.getAccessToken(code).then(function() {
       $location.path('/');
     });
   });

@@ -4,13 +4,15 @@
 
 <div class="jumbotron">
   <p><a class="btn btn-lg btn-success" ng-click="authorizeApp()">Authorize App</a></p>
-  <p><a id="getUserInfo" disabled class="btn btn-lg btn-primary" ng-click="getUserInfo()">Get User Info</a></p>
+  <p><a id="debugGet" disabled class="btn btn-lg btn-primary" ng-click="debug()">Debug call</a></p>
+  <p><input id="debugCall" disabled type="text" ng-model="debugCall"></input></p>
+
 
 </div>
 
-<div class="panel panel-default" ng-show="userInfo">
+<div class="panel panel-default" ng-show="debugResponse">
   <div class="panel-body">
-    <pre>{{ userInfo }}</pre>
+    <pre>{{ debugResponse }}</pre>
   </div>
 </div>
 
